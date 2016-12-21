@@ -28,7 +28,7 @@ float kinsolve (float xzdist, float ydist)
 	if (discriminant < 0 || a == 0)
 	{
 		// Returns -1 if out of range
-		displayString(0, “Out of Range”);
+		displayString(0, â€œOut of Rangeâ€);
 		return -1.0;
 	}
 	else
@@ -283,16 +283,12 @@ task main()
 	eraseDisplay();
 	// Resets horizontal and vertical angles
 	nMotorEncoder[motorA] = 0;
-	if (hRotations < 0)
-	{
-		motor[motorA] = 15;
-		while (nMotorEncoder[motorA] < -(hRotations)) {}
-	}
-	else
-	{
-		motor[motorA] = -15;
-		while (nMotorEncoder[motorA] > -(hRotations)) {}
-	}
+	int resetdir = 1;
+	if (hRotations > 0)
+		resetdir *= -1;
+	motor[motorA] = resetdir * 15;
+	while (fabs (nMotorEncoder[motorA]) > 0) {}	
+	
 	motor[motorA] = 0;
 
 	resetVertAngle();
